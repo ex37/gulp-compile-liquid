@@ -1,26 +1,26 @@
 var gutil = require('gulp-util');
 var through = require('through2');
-var fs = require('fs');
 var extend = require('util')._extend;
 
 var Liquid = require("liquid-node");
 var engine = new Liquid.Engine;
 
 
-function liquid(data, opts) {
+function liquid(opts) {
 
 	var options = opts || {};
 
 	return through.obj(function (file, enc, cb) {
-		var _data = extend({}, data);
+		var _data = options.data || {};
+		var _that = this;
 
 		if (file.isNull()) {
-			this.push(file);
+			_that.push(file);
 			return cb();
 		}
 
 		if (file.isStream()) {
-			this.emit('error', new gutil.PluginError('gulp-compile-liquid', 'Streaming not supported'));
+			_that.emit('error', new gutil.PluginError('gulp-compile-liquid', 'Streaming not supported'));
 			return cb();
 		}
 
@@ -31,8 +31,13 @@ function liquid(data, opts) {
 			if(file.data){
 				_data = extend(_data, file.data);
 			}
+
+			if (typeof options.dataEach === 'function') {
+				_data = options.dataEach(_data, file);
+			}
+
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-compile-liquid', err));
+			_that.emit('error', new gutil.PluginError('gulp-compile-liquid', err));
 		}
 
 		engine
@@ -40,12 +45,11 @@ function liquid(data, opts) {
 		.then(function(template) { return template.render(_data); })
 		.then(function(result) {
 			file.contents = new Buffer(result);
+			_that.push(file);
+			cb();
 		})
 		.catch(function(err) {
-			this.emit('error', new gutil.PluginError('gulp-compile-liquid', err));
-		})
-		.finally(function() {
-			this.push(file);
+			_that.emit('error', new gutil.PluginError('gulp-compile-liquid', err));
 			cb();
 		});
 	});
