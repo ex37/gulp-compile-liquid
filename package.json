@@ -1,0 +1,27 @@
+{
+  "name": "gulp-compile-liquid",
+  "version": "0.1.0",
+  "description": "Compile Liquid templates to file - gulp plugin",
+  "license": "MIT",
+  "author": {
+    "name": "Eduard Ghazanchyan",
+    "email": "eduardgx@gmail.com"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulp",
+    "Liquid",
+    "gulp-plugin",
+    "template",
+    "compile",
+    "html",
+    "rendering"
+  ],
+  "dependencies": {
+    "gulp-util": "~3.0.3",
+    "liquid-node": "^2.6.1",
+    "through2": "^2.0.0"
+  }
+}
