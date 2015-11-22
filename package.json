@@ -1,6 +1,6 @@
 {
   "name": "gulp-compile-liquid",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Compile Liquid templates to file - gulp plugin",
   "dependencies": {
     "gulp-util": "~3.0.3",
