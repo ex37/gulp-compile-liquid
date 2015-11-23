@@ -36,6 +36,10 @@ function liquid(opts) {
 				_data = options.dataEach(_data, file);
 			}
 
+			if (options.rootPath) {
+				engine.registerFileSystem(new Liquid.LocalFileSystem(options.rootPath));
+			}
+
 		} catch (err) {
 			_that.emit('error', new gutil.PluginError('gulp-compile-liquid', err));
 		}

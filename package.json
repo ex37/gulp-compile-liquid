@@ -1,11 +1,11 @@
 {
   "name": "gulp-compile-liquid",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Compile Liquid templates to file - gulp plugin",
   "dependencies": {
     "gulp-util": "~3.0.3",
     "liquid-node": "^2.6.1",
-    "through2": "^2.0.0"
+    "through2": "~2.0.0"
   },
   "files": [
     "index.js"
